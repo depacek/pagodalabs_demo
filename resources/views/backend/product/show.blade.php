@@ -33,19 +33,13 @@
 
                                                 </tr>
                                             @else
-
-
+                                                <tr>
+                                                    <th width="25%">code </th>
+                                                    <td>{{$data['row']->code }}</td>
+                                                </tr>
                                                 <tr>
                                                     <th width="25%">Name</th>
-                                                    <td>
-                                                        {{$data['row']->name}}
-                                                        {!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(250)->generate('ItSolutionStuff.com'); !!}
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <th width="25%">Slug </th>
-                                                    <td>{{$data['row']->slug }}</td>
+                                                    <td>{{$data['row']->name}}</td>
                                                 </tr>
                                                 <tr>
                                                     <th width="25%">Price </th>
@@ -65,6 +59,13 @@
                                                 <tr>
                                                     <th width="25%">image </th>
                                                     <td><img src="{{asset('images/product').'/'. $data['row']->image}}" height="100" alt="{{$data['row']->image}}"/></td>
+                                                </tr>
+                                                <tr>
+                                                    <th width="25%">QR code </th>
+                                                    <td>
+                                                        {!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(250)->generate('ItSolutionStuff.com'); !!}
+                                                        <br/><a href="{{asset('images/product').'/'. $data['row']->qr_code}}" class="btn btn-info" download=""> download</a>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <th width="25%">Status</th>

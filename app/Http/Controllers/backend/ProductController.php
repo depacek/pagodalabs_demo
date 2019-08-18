@@ -28,10 +28,6 @@ class ProductController extends BackendBaseController{
         $data['rows'] = Product::orderBy('created_at','DESC')->get();
 
 
-//         //decoding
-//        $QRCodeReader = new \Libern\QRCodeReader\QRCodeReader();
-//        $qr_text = $QRCodeReader->decode(public_path('images\qr.png'));
-//        dd($qr_text);
         return view($this->loadDataToView($this->base_route . '.index'), compact('data'));
     }
     public function create (){
@@ -42,6 +38,10 @@ class ProductController extends BackendBaseController{
 
     public function store(ProductRequest $request)
     {
+        if ($request->hasFile('photo')){
+            $file_name = $this->UploadFiles($request->file('photo'));
+            $request->request->add(['image' => $file_name]);
+        }
         $request->request->add(['created_by'=> Auth::user()->id]);
         $request->request->add(['code' =>strtoupper( Str::random(8)).''.rand(00, 99)]);
         $qr_code=Str::random(5)."_".rand(00, 99).".png";
@@ -75,57 +75,75 @@ class ProductController extends BackendBaseController{
 
     public function update(Request $request, $id)
     {
-        $product= Product::find($id);
-        $product->update($request->all());
-        if ($product){
-            $request->session()->flash($this->success_message, ucfirst($this->panel) . ' Successfully Created !');
-            return redirect()->route('backend.product.index');
+        if (!$row = Product::find($id)) {
+            $request->session()->flash('message_error', 'Invalid Request !');
+            return redirect()->route($this->base_route.'.index');
+        }
+        if ($request->hasFile('photo')) {
+
+            $file_name = $this->UploadFiles($request->file('photo'));
+            if (file_exists($this->folder_path . $row->image)){
+                unlink($this->folder_path . $row->image);
+            }
+
+        }
+        $request->request->add(['image' => isset($file_name) ? $file_name : $row->image]);
+        $request->request->add(['updated_by' => Auth::user()->id]);
+        $row->update($request->all());
+
+        if ($row){
+            $request->session()->flash($this->success_message, ucfirst($this->panel) . ' Successfully updated !');
+            return redirect()->route($this->base_route.'.index');
         }else{
-            $request->session()->flash($this->message_error,ucfirst($this->panel) . ' cann\'t be Created  ! ');
+            $request->session()->flash($this->message_error, ucfirst($this->panel) . ' update failed  ! ');
             return back();
         }
     }
 
-    public function destroy($id)
+    public function destroy(Request $request,$id)
     {
-        dd('dsvhjkl');
-//        $product= Product::find($id);
-//        $product->delete();
-//        return redirect()->route('backend.product.index');
-    }
-    function deleteimage(Request $request){
-//        dd('ducj');
-        $product_image= ProductImage::find($_POST['image_id']);
-        if( $product_image->delete()){
-            return 'true';
+
+        if (!$row = Product::find($id)) {
+            $request->session()->flash($this->message_error, ' Invalid Request  ! ');
+            return redirect()->route($this->base_route.'.index');
+        }
+        if (file_exists($this->folder_path . $row->image)){
+            unlink($this->folder_path . $row->image);
+        }
+        if (file_exists($this->folder_path . $row->qr_code)){
+            unlink($this->folder_path .''. $row->qr_code);
+        }
+        $row->delete();
+        if ($row){
+            $request->session()->flash($this->success_message, ucfirst($this->panel) . ' Successfully deleted !');
+            return redirect()->route($this->base_route.'.index');
         }else{
-            return 'false';
+            $request->session()->flash($this->success_message, ucfirst($this->panel) . ' delete failed  ! ');
+            return back();
         }
 
     }
+
+    public function find(Request $request)
+    {
+        if ($request->hasFile('csv')){
+            $csv_file = $request->file('csv');
+             //decoding
+            $QRCodeReader = new \Libern\QRCodeReader\QRCodeReader();
+            $qr_text = $QRCodeReader->decode($csv_file->getRealPath());
+            $data['rows'] = Product::whereIn('code',[$qr_text])
+                ->orderBy('created_at','DESC')->get();
+            return view($this->loadDataToView($this->base_route . '.index'), compact('data'));
+        }
+
+    }
+
     protected function UploadFiles($image)
     {
         //  $image      = $request->file('photo');
         $image_name = rand(6785, 9814).'_'.$image->getClientOriginalName();
         $image->move($this->folder_path, $image_name);
-        //code for image resize
-        foreach (config('image.image_dimensions.slider.image') as $dimension) {
-            // open and resize an image file
-            $img = Image::make($this->folder_path.$image_name)->resize($dimension['width'], $dimension['height']);
-            // save the same file as jpg with default quality
-            $img->save($this->folder_path.$dimension['width'].'_'.$dimension['height'].'_'.$image_name);
-        }
-
         return $image_name;
     }
-    protected function UnlinkImage($row)
-    {
-        foreach (config('image.image_dimensions.slider.image') as $dimension) {
-            //     dd($dimension);
-            if (file_exists($this->folder_path.$dimension['width'].'_'.$dimension['height'].'_' . $row->image))
-                unlink($this->folder_path .$dimension['width'].'_'.$dimension['height'].'_'. $row->image);
-        }
 
-
-    }
 }

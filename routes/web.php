@@ -23,4 +23,7 @@ Route::prefix('backend')->middleware(['web','auth'])->namespace('backend')->name
     Route::resource('user', 'UsersController');
     Route::resource('product', 'ProductController');
 
+    Route::post('product/find',           'ProductController@find')                 ->name('product.find');
+
+
 });

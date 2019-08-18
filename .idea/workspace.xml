@@ -16,6 +16,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -111,7 +112,8 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/Programs/Git-2.21.0-64-bit.exe" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -144,7 +146,8 @@
       <workItem from="1565930275275" duration="2681000" />
       <workItem from="1565944153045" duration="743000" />
       <workItem from="1565961416368" duration="5434000" />
-      <workItem from="1566011596539" duration="4926000" />
+      <workItem from="1566011596539" duration="5525000" />
+      <workItem from="1566119483025" duration="3211000" />
     </task>
     <servers />
   </component>
@@ -163,5 +166,20 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php-line-method">
+          <url>file://$PROJECT_DIR$/app/Http/Controllers/backend/ProductController.php</url>
+          <line>38</line>
+          <properties>
+            <option name="className" value="\App\Http\Controllers\backend\ProductController" />
+            <option name="methodName" value="store" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

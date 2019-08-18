@@ -1,4 +1,5 @@
 
+@include('backend.includes.preview_image')
 <div class="form-group">
     {{ Form::label('photo', 'Image', ['class' => 'control-label ']) }}<br>
     {{ Form::file('photo', ['class' => 'form-control'])  }}
