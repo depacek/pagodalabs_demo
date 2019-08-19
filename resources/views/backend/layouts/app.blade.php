@@ -14,7 +14,7 @@
         <div class="pull-right hidden-xs">
             <b>Version</b> 2.4.0
         </div>
-        <strong>Copyright &copy; {{\Carbon\Carbon::now()->year}} <a href="http://dipeshkhatiwada.com.np">Dipesh Khatiwada </a>.</strong> All rights
+        <strong>Copyright &copy; {{\Carbon\Carbon::now()->year}} <a href="http://dipeshkhatiwada.com.np" target="_blank">Dipesh Khatiwada </a>.</strong> All rights
         reserved.
     </footer>
 </div>

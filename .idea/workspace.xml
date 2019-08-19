@@ -112,8 +112,13 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/Programs/Git-2.21.0-64-bit.exe" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Http/Requests" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\pagodalabs_demo\app\Http\Requests" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -148,6 +153,8 @@
       <workItem from="1565961416368" duration="5434000" />
       <workItem from="1566011596539" duration="5525000" />
       <workItem from="1566119483025" duration="3211000" />
+      <workItem from="1566122902148" duration="2641000" />
+      <workItem from="1566213342566" duration="1940000" />
     </task>
     <servers />
   </component>
@@ -172,7 +179,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="php-line-method">
           <url>file://$PROJECT_DIR$/app/Http/Controllers/backend/ProductController.php</url>
-          <line>38</line>
+          <line>39</line>
           <properties>
             <option name="className" value="\App\Http\Controllers\backend\ProductController" />
             <option name="methodName" value="store" />

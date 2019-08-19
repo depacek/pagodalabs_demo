@@ -41,5 +41,5 @@
 
 @section('js')
     @include('backend.includes.slug',['id' => 'name'])
-    {{--@include('backend.includes.ckeditor')--}}
+    @include('backend.includes.ckeditor')
 @endsection

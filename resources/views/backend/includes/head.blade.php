@@ -4,7 +4,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     {{--<title>@if(isset($data['page_title'])){{$data['page_title']}} | @endif Ecommerce </title>--}}
-    <title>@yield('title')| Ecommerce </title>
+    <title>@yield('title')|  {{ config('app.name', 'Pagodalabs') }} </title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="icon" href="" type="image/x-icon">

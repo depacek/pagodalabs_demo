@@ -14,7 +14,8 @@ class AddDescriptionToProductsTable extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            //
+            $table->string('description');
+
         });
     }
 
@@ -26,7 +27,7 @@ class AddDescriptionToProductsTable extends Migration
     public function down()
     {
         Schema::table('products', function (Blueprint $table) {
-            //
+            $table->dropColumn('description');
         });
     }
 }

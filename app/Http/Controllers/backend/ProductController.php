@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FindRequest;
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -73,19 +74,19 @@ class ProductController extends BackendBaseController{
         return view(parent::loadDataToView($this->base_route . '.edit'), compact('data'));
     }
 
-    public function update(Request $request, $id)
+    public function update(ProductRequest $request, $id)
     {
         if (!$row = Product::find($id)) {
             $request->session()->flash('message_error', 'Invalid Request !');
             return redirect()->route($this->base_route.'.index');
         }
         if ($request->hasFile('photo')) {
-
             $file_name = $this->UploadFiles($request->file('photo'));
-            if (file_exists($this->folder_path . $row->image)){
-                unlink($this->folder_path . $row->image);
+            if ($row->image != null){
+                if (file_exists($this->folder_path . $row->image)){
+                    unlink($this->folder_path . $row->image);
+                }
             }
-
         }
         $request->request->add(['image' => isset($file_name) ? $file_name : $row->image]);
         $request->request->add(['updated_by' => Auth::user()->id]);
@@ -107,9 +108,12 @@ class ProductController extends BackendBaseController{
             $request->session()->flash($this->message_error, ' Invalid Request  ! ');
             return redirect()->route($this->base_route.'.index');
         }
-        if (file_exists($this->folder_path . $row->image)){
-            unlink($this->folder_path . $row->image);
+        if ($row->image != null){
+            if (file_exists($this->folder_path .''. $row->image)){
+                unlink($this->folder_path . $row->image);
+            }
         }
+
         if (file_exists($this->folder_path . $row->qr_code)){
             unlink($this->folder_path .''. $row->qr_code);
         }
@@ -124,15 +128,19 @@ class ProductController extends BackendBaseController{
 
     }
 
-    public function find(Request $request)
+    public function find(FindRequest $request)
     {
-        if ($request->hasFile('csv')){
-            $csv_file = $request->file('csv');
+        if ($request->hasFile('qr_file')){
+            $csv_file = $request->file('qr_file');
              //decoding
             $QRCodeReader = new \Libern\QRCodeReader\QRCodeReader();
             $qr_text = $QRCodeReader->decode($csv_file->getRealPath());
             $data['rows'] = Product::whereIn('code',[$qr_text])
                 ->orderBy('created_at','DESC')->get();
+            if (count($data['rows']) ==0){
+                $request->session()->flash('error_message', ucfirst($this->panel) . ' with this QR code not found  ! ');
+                return back();
+            }
             return view($this->loadDataToView($this->base_route . '.index'), compact('data'));
         }
 

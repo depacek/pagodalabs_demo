@@ -10,7 +10,7 @@ use View;
 class BackendBaseController extends Controller
 {
     protected $success_message = 'success_message';
-    protected $message_error = 'message_error';
+    protected $message_error = 'error_message';
 
     protected function loadDataToView($view_path){
         View::composer($view_path, function ($view) {

@@ -5,9 +5,7 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                {{--                    <img src="{{asset('backend/dist/img/user2-160x160.jpg')}}" class="img-circle" alt="User Image">--}}
-                <img src="@auth{{asset('images/users/'.Auth::user()->image)}}@endauth" class="img-circle" alt="User Image">
-                {{--@auth<a href="{{asset('images/users/'.Auth::user()->image)}}">dsf</a>@endauth--}}
+                @auth<a href="""><i class="fa fa-user"></i></a>@endauth
             </div>
             <div class="pull-left info">
                 <p>@auth{{ Auth::user()->name }}@endauth</p>

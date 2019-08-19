@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('price');
             $table->string('quantity');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->string('qr_code');
             $table->boolean('status')->default(0);
             $table->unsignedBigInteger('created_by');
